@@ -36,4 +36,20 @@ function exportData(){let a=document.createElement('a'),url=URL.createObjectURL(
 function importData(){let input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{try{let d=JSON.parse(await input.files[0].text());if(!d.library||!Array.isArray(d.entries)||!Object.keys(C).every(k=>Array.isArray(d.library[k])))throw Error('format');if(confirm('Zastąpić wszystkie obecne dane kopią?')){data={...fresh(),...d};save();render()}}catch{alert('Nieprawidłowy plik JSON')}};input.click()}
 document.addEventListener('click',e=>{let t=e.target.closest('button');if(!t)return;if(t.dataset.view){view=t.dataset.view;render()}else if(t.dataset.add)add(t.dataset.add);else if(t.dataset.mode){data.modes[today()]=t.dataset.mode;save();document.getElementById('overlay')?.remove();render()}else if(t.dataset.modes){modeModal()}else if(t.dataset.close){document.getElementById('overlay')?.remove()}else if(t.dataset.library){tab=t.dataset.library;view='library';render()}else if(t.dataset.project){add('projects');document.getElementById('custom').value=t.dataset.project}else if(t.dataset.tab){tab=t.dataset.tab;render()}else if(t.dataset.new)itemEdit(null);else if(t.dataset.edit!==undefined)itemEdit(+t.dataset.edit);else if(t.dataset.drop!==undefined){if(confirm('Usunąć pozycję z biblioteki?')){data.library[tab].splice(+t.dataset.drop,1);save();render()}}else if(t.dataset.delete){if(confirm('Usunąć wpis?')){data.entries=data.entries.filter(x=>x.id!==t.dataset.delete);save();render()}}else if(t.id==='export')exportData();else if(t.id==='import')importData();else if(t.id==='restore'){if(confirm('Przywrócić początkowe listy?')){data.library=clone(INITIAL);save();render()}}else if(t.id==='wipe'){if(confirm('Usunąć wszystkie dane lokalne?')){data=fresh();save();render()}}});
 document.addEventListener('change',e=>{if(e.target.id==='boundary'){data.boundary=+e.target.value;save();render()}});
-render();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+render();
+if('serviceWorker' in navigator){
+  let refreshing=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(!refreshing){refreshing=true;location.reload()}
+  });
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'})
+      .then(reg=>{
+        reg.update().catch(()=>{});
+        document.addEventListener('visibilitychange',()=>{
+          if(document.visibilityState==='visible')reg.update().catch(()=>{});
+        });
+      }).catch(()=>{});
+  });
+}
+
