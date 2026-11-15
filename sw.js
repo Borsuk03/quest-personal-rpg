@@ -1,5 +1,5 @@
 // QUEST 2.0: network-first assets, offline fallback, automatic activation.
-const CACHE='quest-v2-1-20261115';
+const CACHE='quest-v2-2-20261115';
 const ASSETS=['./','./index.html','./style.css','./app.js','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(Promise.all([caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('quest-')&&key!==CACHE).map(key=>caches.delete(key)))),self.clients.claim()]))});
