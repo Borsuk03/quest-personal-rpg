@@ -1,0 +1,17 @@
+{
+  "name": "QUEST — Mój dzień",
+  "short_name": "QUEST",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#101426",
+  "theme_color": "#292d49",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
