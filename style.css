@@ -23,3 +23,27 @@
 .suggestion-item b{font-size:14px}.suggestion-item small{font-size:12px;color:#bdcce5;line-height:1.5}.suggestion-item span{font-size:11px;color:#9ec3ff;margin-top:2px}
 @media(max-height:740px){.topbar{padding:8px 2px 10px}.today-layout{gap:7px}.progresscard{padding:10px 12px}.progressline{margin:8px 0 6px}.recommend-card{min-height:51px;padding:7px 10px}.category-card{padding:8px 11px}.cat-icon{font-size:21px}.cat-name{font-size:14px}.cat-sub{font-size:10px}.cat-foot .plus{width:25px;height:25px;font-size:18px}.compact-bottom{padding:7px 11px}.bottomnav{margin-top:5px;padding-top:5px}}
 @media(max-height:610px){.category-grid{gap:6px}.recommend-card{min-height:45px}.recommend-copy small{display:none}.cat-sub{display:none}.category-card.fitness{grid-template-rows:1fr}.category-card.fitness .cat-icon,.category-card.fitness .cat-foot{grid-row:1}.category-card.fitness .cat-name{align-self:center}}
+
+/* QUEST 2.2 — character attributes, fluid tanks, colored project tiles */
+.attribute-card{margin-top:0}
+.attribute-card h2{margin:0}.attribute-tubes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:17px 0 4px}
+.attribute-unit{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;text-align:center}
+.attribute-unit .tube-number{font-size:12px;color:var(--liquid);font-weight:800}
+.attribute-unit .tube{position:relative;width:clamp(30px,10vw,52px);height:145px;background:#121a2d;border:2px solid color-mix(in srgb,var(--liquid) 65%,#39435e);border-radius:12px 12px 17px 17px;overflow:hidden;box-shadow:inset 0 0 12px #0008,0 2px 12px #0003}
+.attribute-unit .liquid{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,color-mix(in srgb,var(--liquid) 75%,white),var(--liquid));border-radius:9px 9px 12px 12px;box-shadow:0 0 18px var(--liquid);transition:height .45s ease}
+.attribute-unit .liquid:before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:50%;background:#ffffff66}
+.attribute-unit .tube-symbol{position:absolute;inset:0;display:grid;place-items:center;font-size:20px;color:#ffffffaa;text-shadow:0 1px 4px #0009}
+.attribute-unit b{font-size:clamp(9px,2.5vw,12px);overflow-wrap:anywhere}
+.attribute-unit small{font-size:9px;color:#aebddd}
+.attribute-input{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;font-size:14px;font-weight:700}
+.attribute-input input{width:85px;border-radius:9px;padding:9px;background:#151e32;color:white;border:1px solid #536687}
+#attributeform>.primary{width:100%;padding:12px;border-radius:10px;border:0;margin-top:10px}
+.attributes-preview{display:flex;justify-content:space-between;align-items:center;gap:9px;width:100%;padding:9px 12px;border:1px solid #394968;border-radius:12px;background:#222e48;color:#cbd9f4;font-size:11px;font-weight:700}
+.preview-dots{display:flex;gap:5px}.preview-dots i{width:9px;height:9px;border-radius:50%}
+.project-group{--project:#96b7ff;border-color:color-mix(in srgb,var(--project) 40%,#394765);background:linear-gradient(135deg,color-mix(in srgb,var(--project) 14%,#1e2940),#222d45)}
+.project-game{--project:#9baaff}.project-engineering{--project:#f4bb79}.project-visual{--project:#83d9d5}.project-writing{--project:#e2a5da}.project-other{--project:#a9cf8b}
+.project-group-icon{color:var(--project);margin-right:5px}
+.projectitem{background:color-mix(in srgb,var(--project) 12%,#25324c);border-color:color-mix(in srgb,var(--project) 34%,#455474)}
+.projectitem .project-symbol{font-size:16px;color:var(--project)}
+.main.stats .statsgrid{margin-top:12px}
+@media(max-height:720px){.attributes-preview{padding:6px 10px}.category-grid{gap:7px}}
