@@ -11,29 +11,33 @@ const ROT={0:'Odpoczynek i opcjonalny przegląd tygodnia',1:'Trening, DEV i czyt
 const KEY='quest-personal-rpg-v1';const clone=x=>JSON.parse(JSON.stringify(x));const fresh=()=>({library:clone(INITIAL),entries:[],modes:{},boundary:5});
 let data;try{data=JSON.parse(localStorage.getItem(KEY));if(!data||!data.library||!Array.isArray(data.entries))data=fresh()}catch{data=fresh()}
 data={...fresh(),...data};data.library={...clone(INITIAL),...data.library};let view='today',tab='life';
-const ATTRS=[['knowledge','Wiedza','#9D8CFF','◈'],['charisma','Charyzma','#F3A4CF','✧'],['hygiene','Higiena','#6ED4D1','◉'],['fitness','Kondycja','#F2A46F','◆'],['discipline','Dyscyplina','#A5CF76','⬡']];
+const ATTRS=[['knowledge','Wiedza','#9D8CFF','◈'],['charisma','Charyzma','#F3A4CF','✧'],['habits','Nawyki','#6ED4D1','◉'],['fitness','Kondycja','#F2A46F','◆'],['skills','Umiejętności','#A5CF76','⬡']];
 const ATTR_KEYS=ATTRS.map(a=>a[0]);
 data.attributeRules=data.attributeRules||{};
 data.dailyGoal=Number.isFinite(+data.dailyGoal)&&+data.dailyGoal>0?+data.dailyGoal:60;
 function defaultPoints(cat,name){
- const n=String(name).toLowerCase(),p={knowledge:0,charisma:0,hygiene:0,fitness:0,discipline:0};
- if(cat==='academy'){p.knowledge=5;p.discipline=2}
- if(cat==='work'){p.discipline=5;p.knowledge=2}
- if(cat==='life'){p.hygiene=3;p.discipline=2}
- if(cat==='fitness'){p.fitness=5;p.discipline=2}
- if(cat==='projects'){p.knowledge=3;p.discipline=3}
- if(/warsztat|audi|pajero|samochod|napraw|mechanik/i.test(n)){p.knowledge=2;p.discipline=5;p.fitness=0}
- if(/dykc|artykul|głos|śpiew|komunik|charyzm|argument|perswaz|relac|wystąp|rozmow|przywództw/i.test(n)){p.charisma=5;p.knowledge=2;p.discipline=1}
- if(/czytan|książ|angiel|programow|blender|nauk|psycholog|słownictw/i.test(n)){p.knowledge=5;p.discipline=2}
- if(/higien|kąpiel|prysznic|zęb|sprząt|prani|pościel|porządek|pielęgnac/i.test(n)){p.hygiene=5;p.discipline=2}
- if(/trening|spacer|mobilno|joga|równowag|hantl|guma|bieg|rower|pomp|rozciąg|core|taniec/i.test(n)){p.fitness=5;p.discipline=2;p.hygiene=0}
+ const n=String(name).toLowerCase(),p={knowledge:0,charisma:0,habits:0,fitness:0,skills:0};
+ if(cat==='academy'){p.knowledge=5;p.habits=2}
+ if(cat==='work'){p.habits=5;p.knowledge=2}
+ if(cat==='life'){p.habits=3;p.habits=2}
+ if(cat==='fitness'){p.fitness=5;p.habits=2}
+ if(cat==='projects'){p.skills=5;p.knowledge=2;p.habits=1}
+ if(/warsztat|audi|pajero|samochod|napraw|mechanik/i.test(n)){p.knowledge=2;p.habits=3;p.skills=2;p.fitness=0}
+ if(/dykc|artykul|głos|śpiew|komunik|charyzm|argument|perswaz|relac|wystąp|rozmow|przywództw/i.test(n)){p.charisma=5;p.knowledge=2;p.habits=1}
+ if(/czytan|książ|angiel|programow|blender|nauk|psycholog|słownictw/i.test(n)){p.knowledge=5;p.habits=2}
+ if(/higien|kąpiel|prysznic|zęb|sprząt|prani|pościel|porządek|pielęgnac/i.test(n)){p.habits=5;p.habits=2}
+ if(/trening|spacer|mobilno|joga|równowag|hantl|guma|bieg|rower|pomp|rozciąg|core|taniec/i.test(n)){p.fitness=5;p.habits=2;p.habits=0}
  return p;
 }
-function points(cat,name){const key=cat+'::'+name;return {...defaultPoints(cat,name),...(data.attributeRules[key]||{})}}
-function entryPoints(e){return e.attributes&&typeof e.attributes==='object'?e.attributes:points(e.cat,e.activity)}
+function normalizePoints(raw,cat,name){const p={...defaultPoints(cat,name)};if(!raw)return p;for(const k of ATTR_KEYS){if(Object.prototype.hasOwnProperty.call(raw,k))p[k]=Math.max(0,+raw[k]||0)}
+if(!Object.prototype.hasOwnProperty.call(raw,'habits')&&(raw.hygiene!==undefined||raw.discipline!==undefined))p.habits=Math.max(0,+raw.hygiene||0)+Math.max(0,+raw.discipline||0);
+if(!Object.prototype.hasOwnProperty.call(raw,'skills')&&cat==='projects')p.skills=Math.max(0,(+raw.knowledge||0)+(+raw.discipline||0));
+return p}
+function points(cat,name){return normalizePoints(data.attributeRules[cat+'::'+name],cat,name)}
+function entryPoints(e){return e.attributes&&typeof e.attributes==='object'?normalizePoints(e.attributes,e.cat,e.activity):points(e.cat,e.activity)}
 function totals(items){let t=Object.fromEntries(ATTR_KEYS.map(k=>[k,0]));items.forEach(e=>{let p=entryPoints(e);ATTR_KEYS.forEach(k=>t[k]+=Math.max(0,+p[k]||0))});return t}
 function tubes(items,compact=false){const t=totals(items);return '<div class="attribute-tubes '+(compact?'mini':'')+'">'+ATTRS.map(([key,name,color,icon])=>{const value=t[key],fill=value%100,level=1+Math.floor(value/100);return '<div class="attribute-unit" style="--liquid:'+color+'"><div class="tube-number">'+value+'</div><div class="tube"><div class="liquid" style="height:'+fill+'%"></div><span class="tube-symbol">'+icon+'</span></div><b>'+name+'</b><small>Poziom '+level+'</small></div>'}).join('')+'</div>'}
-function attributeEditor(cat,name){let p=points(cat,name);modal('<div class="modalhead"><h2>Punkty atrybutów</h2><button class="iconbtn" data-close="1">×</button></div><p class="muted">'+h(name)+' · '+C[cat][1]+'</p><form id="attributeform">'+ATTRS.map(([key,label,color])=>'<label class="attribute-input"><span style="color:'+color+'">'+label+'</span><input type="number" min="0" max="20" step="1" name="'+key+'" value="'+(+p[key]||0)+'" required></label>').join('')+'<button class="primary" type="submit">Zapisz punktację</button></form><p class="muted">Zmiana dotyczy przyszłych wpisów. Wcześniej zdobyte punkty zostają bez zmian.</p>');document.getElementById('attributeform').onsubmit=e=>{e.preventDefault();let p={};ATTR_KEYS.forEach(k=>p[k]=Math.max(0,Math.min(20,Math.round(+e.target.elements[k].value||0))));data.attributeRules[cat+'::'+name]=p;save();document.getElementById('overlay').remove();render()}}
+function attributeEditor(cat,name){let p=points(cat,name);modal('<div class="modalhead"><h2>Punkty atrybutów</h2><button class="iconbtn" data-close="1">×</button></div><p class="muted">'+h(name)+' · '+C[cat][1]+'</p><form id="attributeform">'+ATTRS.map(([key,label,color])=>'<label class="attribute-input"><span style="color:'+color+'">'+label+'</span><input type="number" min="0" max="20" step="1" name="'+key+'" value="'+(+p[key]||0)+'" required></label>').join('')+'<button class="primary" type="submit">Zapisz punktację</button></form><p class="muted">Nawyki łączą dawną Higienę i Dyscyplinę. Umiejętności rosną głównie dzięki projektom. Zmiana zasad dotyczy przyszłych wpisów.</p>');document.getElementById('attributeform').onsubmit=e=>{e.preventDefault();let p={};ATTR_KEYS.forEach(k=>p[k]=Math.max(0,Math.min(20,Math.round(+e.target.elements[k].value||0))));data.attributeRules[cat+'::'+name]=p;save();document.getElementById('overlay').remove();render()}}
 const save=()=>localStorage.setItem(KEY,JSON.stringify(data));const h=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','"':'&quot;',"'":'&#39;'}[c]));const pad=n=>String(n).padStart(2,'0');
 function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
 function today(){let d=new Date();if(d.getHours()<(data.boundary??5))d.setDate(d.getDate()-1);return iso(d)}
