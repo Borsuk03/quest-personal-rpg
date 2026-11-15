@@ -1,1 +1,38 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#292d49"><meta name="description" content="QUEST — Twój dzień jako RPG"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css?v=2.4.0"><title>QUEST — Mój dzień</title></head><body><div id="app"></div><script src="./app.js?v=2.4.0" defer></script></body></html>
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#292d49">
+<meta name="description" content="QUEST — Twój dzień jako RPG">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css?v=2.5.1">
+<title>QUEST 2.5 — Mój dzień</title>
+</head>
+<body>
+<div id="app"><p style="padding:24px;color:#fff;background:#171d30">Ładowanie QUEST 2.5…</p></div>
+<script>
+(function(){
+  if(!('serviceWorker' in navigator))return;
+  window.addEventListener('load',async function(){
+    try{
+      const hadController=!!navigator.serviceWorker.controller;
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.filter(r=>r.scope.startsWith(location.origin+location.pathname.replace(/[^/]*$/,''))).map(r=>r.unregister()));
+      if('caches' in window){
+        const keys=await caches.keys();
+        await Promise.all(keys.filter(k=>k.startsWith('quest-')).map(k=>caches.delete(k)));
+      }
+      if(hadController&&!sessionStorage.getItem('quest-sw-cleaned-2.5')){
+        sessionStorage.setItem('quest-sw-cleaned-2.5','yes');
+        location.replace(location.pathname+'?refresh=2.5.1');
+      }
+    }catch(e){console.warn('QUEST update cleanup',e)}
+  });
+})();
+</script>
+<script src="./app.js?v=2.5.1" defer></script>
+</body>
+</html>
