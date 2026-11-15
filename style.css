@@ -70,3 +70,16 @@
 .timer-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
 .timer-actions button{padding:13px 7px;border-radius:11px;border:1px solid #62739b;background:#313e5d;color:white}
 .timer-actions .primary{background:#7864b8;border:0}
+
+/* QUEST 2.5 activity log */
+.today-entries{padding:12px}
+.today-entries h2{font-size:14px;margin:0}
+.today-entries .row{align-items:center;justify-content:space-between;margin-bottom:8px}
+.today-entries .entry{padding:9px 0;border-bottom:1px solid #3b4860}
+.today-entries .entry:last-child{border-bottom:0}
+.today-entries .entryright{display:flex;align-items:center;gap:7px}
+.today-entries .entryright .iconbtn{background:#4b3042;color:#ffb4c5;border-radius:9px;min-width:30px;min-height:30px}
+.today-entries .entrytext{min-width:0;overflow:hidden}
+.today-entries .entrytext strong,.today-entries .entrytext small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.today-entries .entrytext small{color:#aebddd;font-size:10px}
+.today-entries .entryright b{white-space:nowrap;font-size:11px}
