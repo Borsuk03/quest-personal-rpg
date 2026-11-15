@@ -47,3 +47,26 @@
 .projectitem .project-symbol{font-size:16px;color:var(--project)}
 .main.stats .statsgrid{margin-top:12px}
 @media(max-height:720px){.attributes-preview{padding:6px 10px}.category-grid{gap:7px}}
+
+/* QUEST 2.4 workout flow */
+.workout-shortcut{display:flex;align-items:center;justify-content:space-between;gap:8px;background:linear-gradient(105deg,#3c354f,#292e48);border:1px solid #806aab;border-radius:12px;padding:10px 12px;color:#e8d9ff;font-size:12px;text-align:left}
+.workout-shortcut b{color:#d7baff;font-size:11px}
+.workout-screen{display:flex;flex-direction:column;gap:12px;padding-bottom:20px}
+.workout-hero{background:linear-gradient(145deg,#353254,#222e47);border-color:#695a9b}
+.workout-hero h2{font-size:22px;margin:8px 0}
+.workout-hero p{color:#bdc8e2;font-size:12px;line-height:1.5}
+.workout-meta{display:flex;gap:8px;margin:12px 0}
+.workout-meta span{background:#374561;padding:5px 9px;border-radius:20px;font-size:11px;color:#e0e8ff}
+.workout-start{width:100%;padding:13px;border:0;border-radius:11px}
+.workout-exercise{display:flex;align-items:center;gap:11px;border-bottom:1px solid #3b4860;padding:10px 0}
+.workout-exercise:last-child{border-bottom:0}
+.workout-order{display:grid;place-items:center;width:27px;height:27px;flex-shrink:0;border-radius:9px;background:#4b4169;color:#e2caff;font-size:12px}
+.workout-exercise>div{display:flex;flex-direction:column;gap:4px;flex:1}
+.workout-exercise b{font-size:13px}
+.workout-exercise small,.workout-exercise>span:last-child{font-size:11px;color:#aebddb}
+.workout-timer{text-align:center;padding:14px 0}
+.workout-timer h2{font-size:23px;margin:12px 0}
+.timer-clock{font-size:clamp(62px,18vw,90px);font-variant-numeric:tabular-nums;font-weight:800;letter-spacing:-3px;color:#a9bfff;margin:20px 0}
+.timer-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.timer-actions button{padding:13px 7px;border-radius:11px;border:1px solid #62739b;background:#313e5d;color:white}
+.timer-actions .primary{background:#7864b8;border:0}
