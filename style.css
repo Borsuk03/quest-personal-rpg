@@ -283,3 +283,13 @@ html,body{min-height:100%;height:100%;overflow:hidden}
 .recipe-screen .recipe-random:hover{background:linear-gradient(135deg,#5c4c80,#4b416d);border-color:#9482c4}
 .recipe-screen .recipe-random:active{background:#625287;transform:scale(.99)}
 .recipe-screen .recipe-random:focus-visible{outline:2px solid #b5a0ff;outline-offset:3px}
+
+/* QUEST 3.4.2 — bespoke shopping checklist, no native white boxes */
+.recipe-screen .recipe-check{position:relative;cursor:pointer;gap:13px;user-select:none;-webkit-tap-highlight-color:transparent}
+.recipe-screen .recipe-check input[type="checkbox"]{appearance:none;-webkit-appearance:none;display:grid;place-items:center;position:relative;flex:0 0 22px;width:22px;height:22px;margin:0;border:1.5px solid #69718d;border-radius:7px;background:#192238;box-shadow:inset 0 1px 2px #0b112422;transition:background .16s,border-color .16s,transform .16s;cursor:pointer}
+.recipe-screen .recipe-check input[type="checkbox"]::after{content:"";width:10px;height:6px;border-left:2px solid #f1eaff;border-bottom:2px solid #f1eaff;transform:rotate(-45deg) scale(0);margin-top:-3px;transition:transform .14s ease}
+.recipe-screen .recipe-check input[type="checkbox"]:checked{background:#67558f;border-color:#9580c3}
+.recipe-screen .recipe-check input[type="checkbox"]:checked::after{transform:rotate(-45deg) scale(1)}
+.recipe-screen .recipe-check input[type="checkbox"]:focus-visible{outline:2px solid #b8a3ec;outline-offset:3px}
+.recipe-screen .recipe-check:active input[type="checkbox"]{transform:scale(.93)}
+@media(prefers-reduced-motion:reduce){.recipe-screen .recipe-check input[type="checkbox"],.recipe-screen .recipe-check input[type="checkbox"]::after{transition:none}}
