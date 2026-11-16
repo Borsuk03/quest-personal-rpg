@@ -1,0 +1,11 @@
+{
+  "version": "4.0.0",
+  "files": [
+    "index.html",
+    "app.js",
+    "style.css",
+    "recipes.js",
+    "icon.svg",
+    "manifest.webmanifest"
+  ]
+}
