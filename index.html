@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#292d49">
-<meta name="quest-version" content="3.4.2">
+<meta name="quest-version" content="3.5.0">
 <meta name="description" content="QUEST — Twój dzień jako RPG">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./style.css?v=3.4.2">
+<link rel="stylesheet" href="./style.css?v=3.5.0">
 <style id="quest-critical-home">/* Bundled with HTML so dashboard and styles deploy atomically */
 /* QUEST 2.9 — focused dashboard, reduced visual noise and subtle motion */
 .quest-home{gap:13px;padding-top:2px;padding-bottom:20px}
@@ -66,21 +66,21 @@
 @media(prefers-reduced-motion:reduce){.quest-home *,.quest-home *::before,.quest-home *::after{animation:none!important;transition:none!important}}
 
 </style>
-<title>QUEST 3.4.2 — Mój dzień</title>
+<title>QUEST 3.5.0 — Mój dzień</title>
 </head>
 <body>
-<div id="app"><p style="padding:24px;color:#fff;background:#171d30">Ładowanie QUEST 3.4.2…</p></div>
+<div id="app"><p style="padding:24px;color:#fff;background:#171d30">Ładowanie QUEST 3.5.0…</p></div>
 <script>
 window.addEventListener('load',async()=>{
  if(!('serviceWorker' in navigator))return;
  try{
-  const registration=await navigator.serviceWorker.register('./sw.js?v=3.4.2',{scope:'./',updateViaCache:'none'});
+  const registration=await navigator.serviceWorker.register('./sw.js?v=3.5.0',{scope:'./',updateViaCache:'none'});
   registration.update().catch(()=>{});
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)registration.update().catch(()=>{})});
  }catch(error){console.warn('QUEST PWA registration:',error)}
 });
 </script>
-<script src="./recipes.js?v=3.4.2" defer></script>
-<script src="./app.js?v=3.4.2" defer></script>
+<script src="./recipes.js?v=3.5.0" defer></script>
+<script src="./app.js?v=3.5.0" defer></script>
 </body>
 </html>
