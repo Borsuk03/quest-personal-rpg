@@ -7,7 +7,7 @@ projects:['Prison Escape Game','CircleGrind','NightTower','ScrapSpace','Stunt','
 // Compact, non-overlapping quick-log presets. Minutes are fixed per tap.
 const QUICK={
  life:[['Poranna rutyna',15],['Wieczorna rutyna',15],['Sprzątanie',15],['Zakupy i sprawunki',30],['Sprawy domowe',30],['Relacje i bliscy',30],['Odpoczynek',30]],
- work:[['Praca',60],['Skupiona praca',30],['Organizacja pracy',15],['Spotkanie',30]],
+ work:[['Praca — 30 minut',30,15],['Praca — krótka zmiana',240,60],['Praca — pełna zmiana',480,100],['Dzień wolny',0,0]],
  academy:[['Czytanie',30],['Nauka',30],['Język obcy',15],['Ćwiczenia głosu',15],['Rozwój komunikacji',15]],
  projects:[['Praca nad projektem',30],['Projektowanie',30],['Tworzenie 3D',30],['Programowanie',30],['Majsterkowanie',30]],
  fitness:[['Spacer',30],['Trening',30],['Mobilność',15],['Rower',30],['Bieganie',30],['Regeneracja ruchowa',15]]
@@ -16,7 +16,7 @@ const FITNESS=['Trening siłowy','Mobilność i rozciąganie','Spacer','Ćwiczen
 INITIAL.fitness=FITNESS;
 const C={fitness:['♜','Sprawność fizyczna',14],life:['☼','Codzienność',12],work:['◈','Praca i skupienie',10],academy:['✧','Akademia',16],projects:['⚒','Warsztat twórcy',20]};
 const ROT={0:'Odpoczynek i opcjonalny przegląd tygodnia',1:'Trening, DEV i czytanie',2:'Mobilność, 3D i angielski',3:'Trening, dowolny projekt i czytanie',4:'Spacer, DEV i angielski',5:'Trening, 3D i czytanie',6:'Odpoczynek i spacer, jeśli masz ochotę'};
-const APP_VERSION='3.4.2';const KEY='quest-personal-rpg-v1';const clone=x=>JSON.parse(JSON.stringify(x));const fresh=()=>({library:clone(INITIAL),entries:[],modes:{},boundary:5});
+const APP_VERSION='3.5.0';const KEY='quest-personal-rpg-v1';const clone=x=>JSON.parse(JSON.stringify(x));const fresh=()=>({library:clone(INITIAL),entries:[],modes:{},boundary:5});
 let data;try{data=JSON.parse(localStorage.getItem(KEY));if(!data||!data.library||!Array.isArray(data.entries))data=fresh()}catch{data=fresh()}
 data={...fresh(),...data};data.library={...clone(INITIAL),...data.library};let view='today',tab='life';
 const ATTRS=[['knowledge','Wiedza','#9D8CFF','◈'],['charisma','Charyzma','#F3A4CF','✧'],['habits','Nawyki','#6ED4D1','◉'],['fitness','Kondycja','#F2A46F','◆'],['skills','Umiejętności','#A5CF76','⬡']];
@@ -50,7 +50,7 @@ const save=()=>localStorage.setItem(KEY,JSON.stringify(data));const h=s=>String(
 function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
 function today(){let d=new Date();if(d.getHours()<(data.boundary??5))d.setDate(d.getDate()-1);return iso(d)}
 function nice(s){return new Date(s+'T12:00:00').toLocaleDateString('pl-PL',{weekday:'long',day:'numeric',month:'long'})}
-function xp(e){return Math.round(C[e.cat][2]+Math.min(120,Math.max(0,+e.minutes||0))*.5)}
+function xp(e){return Number.isFinite(e.xpAward)?Math.max(0,e.xpAward):Math.round(C[e.cat][2]+Math.min(120,Math.max(0,+e.minutes||0))*.5)}
 function sum(arr,fn){return arr.reduce((a,x)=>a+fn(x),0)}
 function entries(date){return data.entries.filter(e=>e.date===date)}
 
@@ -85,7 +85,7 @@ function recommendations(d){
  const strenuous=yesterday.some(e=>e.cat==='fitness'&&/siłow|hantl|pomp|bieg|trening core/i.test(e.activity));
  const active=n>=5||mins>=240,quiet=n>0&&n<=2&&mins<90;
  const weekend=day===0||day===6;
- const work=data.modes[d]||'short';
+ const workOff=entries(d).some(e=>e.cat==='work'&&e.activity==='Dzień wolny');
  let suggestions=[];
  if(!n)suggestions.push({cat:'life',title:'Zacznij spokojnie',desc:'Brak wczorajszych wpisów — bez zakładania, że był to wolny dzień.'});
  else if(active)suggestions.push({cat:'life',title:'Zadbaj o regenerację',desc:'Wczoraj: '+n+' aktywności, '+mins+' min. Dziś wybierz lżejsze tempo.'});
@@ -94,19 +94,19 @@ function recommendations(d){
  suggestions.push(strenuous?{cat:'fitness',title:'Mobilność lub lekki spacer',desc:'Po wczorajszym wysiłku siłowym proponuję lżejszy ruch.'}:{cat:'fitness',title:active?'Spacer i rozciąganie':'Krótki trening lub spacer',desc:active?'Regeneracyjny ruch bez presji.':'Wybierz aktywność dopasowaną do samopoczucia.'});
  if(weekend)suggestions.push({cat:'academy',title:'Czytanie albo pełen odpoczynek',desc:'Weekend — rozwój jest opcjonalny.'});
  else {const topics={1:'Psychologia i komunikacja',2:'Angielski',3:'Dykcja i argumentacja',4:'Nauka techniczna',5:'Pisanie i kreatywność'};suggestions.push({cat:'academy',title:topics[day]||'Czytanie',desc:active?'Wystarczy 5–10 minut.':'Proponuję 20 minut: głos, czytanie i słownictwo.'})}
- if(!weekend&&work!=='off'&&!active)suggestions.push({cat:'work',title:'Jeden konkretny rezultat',desc:'Wybierz ważne zadanie zamiast sztywnego harmonogramu.'});
+ if(!weekend&&!workOff&&!active)suggestions.push({cat:'work',title:'Jeden konkretny rezultat',desc:'Wybierz ważne zadanie zamiast sztywnego harmonogramu.'});
  return suggestions.slice(0,3);
 }
 function suggestModal(){let d=today();modal('<div class="modalhead"><h2>Propozycje na dziś</h2><button class="iconbtn" data-close="1">×</button></div><p class="muted">Wskazówki na podstawie dnia tygodnia i zapisanych aktywności. Nie są obowiązkami.</p>'+recommendations(d).map(x=>'<button class="suggestion-item" data-add="'+x.cat+'"><b>'+h(x.title)+'</b><small>'+h(x.desc)+'</small><span>Dodaj aktywność ＋</span></button>').join(''))}
 let todayLogOpen=false;
 function todayView(){
- const d=today(),a=entries(d),mode=data.modes[d]||'short',tip=recommendations(d)[0];
+ const d=today(),a=entries(d),tip=recommendations(d)[0];
  const earned=sum(a,xp),goal=data.dailyGoal||60,percent=Math.min(100,Math.round(earned/goal*100));
  const cats=[['life','☀','Codzienność'],['work','◈','Praca'],['academy','✧','Akademia'],['projects','◇','Twórczość'],['fitness','♜','Sprawność']];
  return '<div class="today-layout quest-home">'+
  '<section class="home-summary"><div class="home-summary-top"><div><span class="home-date">'+nice(d)+'</span><strong>Twój postęp</strong></div><div class="home-xp">+'+earned+' <small>XP</small></div></div>'+
  '<div class="home-progress"><i style="width:'+percent+'%"></i></div>'+
- '<div class="home-summary-foot"><span>'+a.length+' wykonanych · cel '+goal+' XP</span><button data-modes="1" class="home-mode">'+({full:'Intensywny',short:'Krótki',off:'Wolne'}[mode])+'⌄</button></div>'+
+ '<div class="home-summary-foot"><span>'+a.length+' wykonanych · cel '+goal+' XP</span></div>'+
  '<button class="home-tip" data-suggestions="1"><span class="home-tip-star">✦</span><span><b>Pomysł na dziś</b><small>'+h(tip.title)+'</small></span><span class="home-chevron">›</span></button></section>'+
  '<div class="home-section-label"><strong>Dodaj aktywność</strong><span>Wybierz kategorię</span></div>'+
  '<section class="category-grid home-categories">'+cats.map(([k,icon,label])=>'<button class="category-card '+k+'" data-add="'+k+'"><span class="cat-icon">'+icon+'</span><span class="cat-name">'+label+'</span><span class="cat-foot"><span class="plus">＋</span></span></button>').join('')+'</section>'+
@@ -144,26 +144,25 @@ function historyView(){let a=data.entries.slice().sort((x,y)=>y.date.localeCompa
 function settingsView(){return '<div class="settings-list"><section class="contentcard"><h2>Biblioteka aktywności</h2><p>Edytuj listy, z których wybierasz wykonane rzeczy.</p>'+Object.keys(C).map(k=>'<button class="setting-row" data-library="'+k+'"><span>'+C[k][1]+'</span><span>›</span></button>').join('')+'</section><section class="contentcard"><h2>Twoje dane</h2><p>Dane zapisują się lokalnie na urządzeniu.</p><div class="settings-actions"><button class="primary" id="export">Eksport JSON</button><button id="import">Import JSON</button><button id="restore">Przywróć listy</button></div></section><section class="contentcard"><div class="row"><h2>Aktualizacje</h2><span class="version-pill">v'+APP_VERSION+'</span></div><button class="update-btn" id="update-app"><span class="update-icon">↻</span><span>Sprawdź aktualizacje</span><span class="update-chevron">›</span></button><p id="update-status" class="muted">Zainstalowana wersja: '+APP_VERSION+'</p></section><section class="contentcard"><h2>Granica dnia</h2><label class="field">Nowy dzień od godziny<select id="boundary">'+[3,4,5,6,7,8].map(i=>'<option value="'+i+'" '+(data.boundary===i?'selected':'')+'>'+pad(i)+':00</option>').join('')+'</select></label></section><section class="contentcard"><button id="wipe" class="danger">Usuń wszystkie lokalne dane</button></section></div>'}
 function render(){document.getElementById('app').innerHTML='<div class="app-shell">'+head()+'<main class="main '+view+'">'+({today:todayView,stats:statsView,projects:projectsView,settings:settingsView,library:libraryView,history:historyView,recipes:recipesView,workout:workoutView}[view])()+'</main>'+bottom()+'</div>'}
 function modal(inner){let x=document.createElement('div');x.className='modalbg';x.id='overlay';x.innerHTML='<div class="modal">'+inner+'</div>';x.addEventListener('click',e=>{if(e.target===x){workoutStop();x.remove()}});document.body.append(x)}
-function modeModal(){let d=today();modal('<div class="modalhead"><h2>Tryb dnia</h2><button class="iconbtn" data-close="1">×</button></div><div class="modeoptions">'+[['full','Intensywny','8–16 godzin'],['short','Krótki','0–6 godzin'],['off','Wolne','0 godzin']].map(([k,n,sub])=>'<button class="modeoption '+(data.modes[d]===k?'selected':'')+'" data-mode="'+k+'"><b>'+n+'</b><small>'+sub+'</small></button>').join('')+'</div><p class="muted">To oznaczenie dnia, nie wymóg.</p>')}
-function recordActivity(cat,name,minutes,note=''){
- data.entries.push({id:crypto.randomUUID?.()||String(Date.now())+'-'+Math.random().toString(36).slice(2),cat,activity:name,date:today(),minutes,attributes:points(cat,name),note});
+function recordActivity(cat,name,minutes,note='',xpAward){
+ data.entries.push({id:crypto.randomUUID?.()||String(Date.now())+'-'+Math.random().toString(36).slice(2),cat,activity:name,date:today(),minutes,attributes:points(cat,name),note,...(Number.isFinite(xpAward)?{xpAward}:{})});
  save();
 }
 function add(cat){
  cat=QUICK[cat]?cat:'life';
  const list=QUICK[cat],counts=entries(today());
  const countFor=(name)=>counts.filter(e=>e.cat===cat&&e.activity===name).length;
- modal('<div class="modalhead"><div><div class="eyebrow">SZYBKI ZAPIS · '+h(C[cat][1])+'</div><h2>Co udało się zrobić?</h2></div><button class="iconbtn" data-close="1" aria-label="Zamknij">×</button></div><p class="quick-help">Jedno dotknięcie = jedna porcja czasu. Możesz dotknąć ponownie.</p><div class="quick-grid">'+list.map(([name,mins],i)=>'<button class="quick-activity" data-quick="'+i+'"><span class="quick-name">'+h(name)+'</span><span class="quick-detail">'+mins+' min <b class="quick-count" data-quick-count="'+i+'">'+(countFor(name)?'× '+countFor(name):'＋')+'</b></span></button>').join('')+'</div><div class="quick-footer"><span id="quick-feedback" aria-live="polite">Wybierz aktywność</span><button class="quick-more" data-advanced="'+cat+'">Inna aktywność ›</button></div>');
+ modal('<div class="modalhead"><div><div class="eyebrow">SZYBKI ZAPIS · '+h(C[cat][1])+'</div><h2>Co udało się zrobić?</h2></div><button class="iconbtn" data-close="1" aria-label="Zamknij">×</button></div><p class="quick-help">Jedno dotknięcie = jedna porcja czasu. Możesz dotknąć ponownie.</p><div class="quick-grid">'+list.map(([name,mins,award],i)=>'<button class="quick-activity" data-quick="'+i+'"><span class="quick-name">'+h(name)+'</span><span class="quick-detail">'+(cat==='work'?(mins?mins/60>=1?mins/60+' h':mins+' min':'Wolne') : mins+' min')+(Number.isFinite(award)?' · '+award+' XP':'')+' <b class="quick-count" data-quick-count="'+i+'">'+(countFor(name)?'× '+countFor(name):'＋')+'</b></span></button>').join('')+'</div><div class="quick-footer"><span id="quick-feedback" aria-live="polite">Wybierz aktywność</span><button class="quick-more" data-advanced="'+cat+'">Inna aktywność ›</button></div>');
 }
 function quickRecord(i){
  const overlay=document.getElementById('overlay'),cat=overlay?.dataset.quickCategory;
  const list=QUICK[cat];if(!list||!list[i])return;
- const [name,mins]=list[i];recordActivity(cat,name,mins);
+ const [name,mins,award]=list[i];if(cat==='work'&&name==='Dzień wolny'&&entries(today()).some(e=>e.cat==='work'&&e.activity===name)){const feedback=document.getElementById('quick-feedback');if(feedback)feedback.textContent='Dzień wolny już zapisany';return}recordActivity(cat,name,mins,'',award);
  const count=entries(today()).filter(e=>e.cat===cat&&e.activity===name).length;
  const badge=overlay.querySelector('[data-quick-count="'+i+'"]');
  if(badge)badge.textContent='× '+count;
  const feedback=document.getElementById('quick-feedback');
- if(feedback)feedback.textContent='✓ '+name+' · +'+mins+' min';
+ if(feedback)feedback.textContent='✓ '+name+' · +'+(Number.isFinite(award)?award:xp({cat,minutes:mins}))+' XP';
  render();
 }
 function advancedAdd(cat){
@@ -194,7 +193,7 @@ async function checkAppUpdate(){
 }
 function exportData(){let a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.href=url;a.download='quest-backup-'+today()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000)}
 function importData(){let input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{try{let d=JSON.parse(await input.files[0].text());if(!d.library||!Array.isArray(d.entries)||!['life','work','academy','projects'].every(k=>Array.isArray(d.library[k])))throw Error('format');if(confirm('Zastąpić wszystkie obecne dane kopią?')){data={...fresh(),...d};data.library={...clone(INITIAL),...data.library};save();render()}}catch{alert('Nieprawidłowy plik JSON')}};input.click()}
-document.addEventListener('click',e=>{let t=e.target.closest('button');if(!t)return;if(t.dataset.view){view=t.dataset.view;render()}else if(t.dataset.recipeRandom){chooseRecipe()}else if(t.dataset.recipeType){recipeState().type=t.dataset.recipeType;save();render()}else if(t.dataset.recipeReset){recipeState().checked={};save();render()}else if(t.dataset.toggleEntries){todayLogOpen=!todayLogOpen;render()}else if(t.dataset.add){document.getElementById('overlay')?.remove();add(t.dataset.add);document.getElementById('overlay').dataset.quickCategory=t.dataset.add}else if(t.dataset.quick!==undefined){quickRecord(+t.dataset.quick)}else if(t.dataset.advanced){document.getElementById('overlay')?.remove();advancedAdd(t.dataset.advanced)}else if(t.dataset.mode){data.modes[today()]=t.dataset.mode;save();document.getElementById('overlay')?.remove();render()}else if(t.dataset.modes){modeModal()}else if(t.dataset.suggestions){suggestModal()}else if(t.dataset.workoutStart){workoutStart()}else if(t.dataset.workoutToggle){workoutToggle()}else if(t.dataset.workoutNext){workoutNext()}else if(t.dataset.workoutExit){workoutStop();document.getElementById('overlay')?.remove()}else if(t.dataset.close){document.getElementById('overlay')?.remove()}else if(t.dataset.library){tab=t.dataset.library;view='library';render()}else if(t.dataset.project){advancedAdd('projects');document.getElementById('custom').value=t.dataset.project}else if(t.dataset.tab){tab=t.dataset.tab;render()}else if(t.dataset.new)itemEdit(null);else if(t.dataset.attributes!==undefined)attributeEditor(tab,data.library[tab][+t.dataset.attributes]);else if(t.dataset.edit!==undefined)itemEdit(+t.dataset.edit);else if(t.dataset.drop!==undefined){if(confirm('Usunąć pozycję z biblioteki?')){data.library[tab].splice(+t.dataset.drop,1);save();render()}}else if(t.dataset.delete){const selected=data.entries.find(x=>String(x.id)===t.dataset.delete);if(selected&&confirm('Usunąć „'+selected.activity+'” z '+selected.date+'? XP i atrybuty zostaną przeliczone.')){data.entries=data.entries.filter(x=>String(x.id)!==t.dataset.delete);save();render()}}else if(t.id==='update-app')checkAppUpdate();else if(t.id==='export')exportData();else if(t.id==='import')importData();else if(t.id==='restore'){if(confirm('Przywrócić początkowe listy?')){data.library=clone(INITIAL);save();render()}}else if(t.id==='wipe'){if(confirm('Usunąć wszystkie dane lokalne?')){data=fresh();save();render()}}});
+document.addEventListener('click',e=>{let t=e.target.closest('button');if(!t)return;if(t.dataset.view){view=t.dataset.view;render()}else if(t.dataset.recipeRandom){chooseRecipe()}else if(t.dataset.recipeType){recipeState().type=t.dataset.recipeType;save();render()}else if(t.dataset.recipeReset){recipeState().checked={};save();render()}else if(t.dataset.toggleEntries){todayLogOpen=!todayLogOpen;render()}else if(t.dataset.add){document.getElementById('overlay')?.remove();add(t.dataset.add);document.getElementById('overlay').dataset.quickCategory=t.dataset.add}else if(t.dataset.quick!==undefined){quickRecord(+t.dataset.quick)}else if(t.dataset.advanced){document.getElementById('overlay')?.remove();advancedAdd(t.dataset.advanced)}else if(t.dataset.suggestions){suggestModal()}else if(t.dataset.workoutStart){workoutStart()}else if(t.dataset.workoutToggle){workoutToggle()}else if(t.dataset.workoutNext){workoutNext()}else if(t.dataset.workoutExit){workoutStop();document.getElementById('overlay')?.remove()}else if(t.dataset.close){document.getElementById('overlay')?.remove()}else if(t.dataset.library){tab=t.dataset.library;view='library';render()}else if(t.dataset.project){advancedAdd('projects');document.getElementById('custom').value=t.dataset.project}else if(t.dataset.tab){tab=t.dataset.tab;render()}else if(t.dataset.new)itemEdit(null);else if(t.dataset.attributes!==undefined)attributeEditor(tab,data.library[tab][+t.dataset.attributes]);else if(t.dataset.edit!==undefined)itemEdit(+t.dataset.edit);else if(t.dataset.drop!==undefined){if(confirm('Usunąć pozycję z biblioteki?')){data.library[tab].splice(+t.dataset.drop,1);save();render()}}else if(t.dataset.delete){const selected=data.entries.find(x=>String(x.id)===t.dataset.delete);if(selected&&confirm('Usunąć „'+selected.activity+'” z '+selected.date+'? XP i atrybuty zostaną przeliczone.')){data.entries=data.entries.filter(x=>String(x.id)!==t.dataset.delete);save();render()}}else if(t.id==='update-app')checkAppUpdate();else if(t.id==='export')exportData();else if(t.id==='import')importData();else if(t.id==='restore'){if(confirm('Przywrócić początkowe listy?')){data.library=clone(INITIAL);save();render()}}else if(t.id==='wipe'){if(confirm('Usunąć wszystkie dane lokalne?')){data=fresh();save();render()}}});
 document.addEventListener('change',e=>{if(e.target.dataset.recipeCheck!==undefined){recipeState().checked[e.target.dataset.recipeCheck]=e.target.checked;save();const count=document.getElementById('recipe-count');if(count){const r=currentRecipe();count.textContent=Object.values(recipeState().checked).filter(Boolean).length+' / '+(r?r.ingredients.length:0)}return}if(e.target.id==='boundary'){data.boundary=+e.target.value;save();render()}else if(e.target.id==='dailygoal'){data.dailyGoal=Math.max(10,Math.min(2000,+e.target.value||60));save();render()}});
 render();
 // QUEST uses a network-first service worker for installability.
