@@ -16,7 +16,7 @@ const FITNESS=['Trening siłowy','Mobilność i rozciąganie','Spacer','Ćwiczen
 INITIAL.fitness=FITNESS;
 const C={fitness:['♜','Sprawność fizyczna',14],life:['☼','Codzienność',12],work:['◈','Praca i skupienie',10],academy:['✧','Akademia',16],projects:['⚒','Warsztat twórcy',20]};
 const ROT={0:'Odpoczynek i opcjonalny przegląd tygodnia',1:'Trening, DEV i czytanie',2:'Mobilność, 3D i angielski',3:'Trening, dowolny projekt i czytanie',4:'Spacer, DEV i angielski',5:'Trening, 3D i czytanie',6:'Odpoczynek i spacer, jeśli masz ochotę'};
-const APP_VERSION='3.4.1';const KEY='quest-personal-rpg-v1';const clone=x=>JSON.parse(JSON.stringify(x));const fresh=()=>({library:clone(INITIAL),entries:[],modes:{},boundary:5});
+const APP_VERSION='3.4.2';const KEY='quest-personal-rpg-v1';const clone=x=>JSON.parse(JSON.stringify(x));const fresh=()=>({library:clone(INITIAL),entries:[],modes:{},boundary:5});
 let data;try{data=JSON.parse(localStorage.getItem(KEY));if(!data||!data.library||!Array.isArray(data.entries))data=fresh()}catch{data=fresh()}
 data={...fresh(),...data};data.library={...clone(INITIAL),...data.library};let view='today',tab='life';
 const ATTRS=[['knowledge','Wiedza','#9D8CFF','◈'],['charisma','Charyzma','#F3A4CF','✧'],['habits','Nawyki','#6ED4D1','◉'],['fitness','Kondycja','#F2A46F','◆'],['skills','Umiejętności','#A5CF76','⬡']];
