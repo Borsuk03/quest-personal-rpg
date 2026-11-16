@@ -16,7 +16,7 @@ const FITNESS=['Trening siłowy','Mobilność i rozciąganie','Spacer','Ćwiczen
 INITIAL.fitness=FITNESS;
 const C={fitness:['♜','Sprawność fizyczna',14],life:['☼','Codzienność',12],work:['◈','Praca i skupienie',10],academy:['✧','Akademia',16],projects:['⚒','Warsztat twórcy',20]};
 const ROT={0:'Odpoczynek i opcjonalny przegląd tygodnia',1:'Trening, DEV i czytanie',2:'Mobilność, 3D i angielski',3:'Trening, dowolny projekt i czytanie',4:'Spacer, DEV i angielski',5:'Trening, 3D i czytanie',6:'Odpoczynek i spacer, jeśli masz ochotę'};
-const APP_VERSION='3.5.0';const KEY='quest-personal-rpg-v1';const clone=x=>JSON.parse(JSON.stringify(x));const fresh=()=>({library:clone(INITIAL),entries:[],modes:{},boundary:5});
+const APP_VERSION='4.0.0';const KEY='quest-personal-rpg-v1';const clone=x=>JSON.parse(JSON.stringify(x));const fresh=()=>({library:clone(INITIAL),entries:[],modes:{},boundary:5});
 let data;try{data=JSON.parse(localStorage.getItem(KEY));if(!data||!data.library||!Array.isArray(data.entries))data=fresh()}catch{data=fresh()}
 data={...fresh(),...data};data.library={...clone(INITIAL),...data.library};let view='today',tab='life';
 const ATTRS=[['knowledge','Wiedza','#9D8CFF','◈'],['charisma','Charyzma','#F3A4CF','✧'],['habits','Nawyki','#6ED4D1','◉'],['fitness','Kondycja','#F2A46F','◆'],['skills','Umiejętności','#A5CF76','⬡']];
@@ -170,7 +170,13 @@ function advancedAdd(cat){
  document.getElementById('entryform').onsubmit=e=>{e.preventDefault();const name=document.getElementById('custom').value.trim(),mins=+document.getElementById('minutes').value,date=document.getElementById('date').value;if(!name||!Number.isFinite(mins)||mins<1||mins>1440||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(date))return alert('Sprawdź dane');data.entries.push({id:crypto.randomUUID?.()||String(Date.now())+'-'+Math.random(),cat,activity:name,date,minutes:mins,attributes:points(cat,name),note:document.getElementById('note').value.trim()});save();document.getElementById('overlay')?.remove();render()};
 }
 function itemEdit(i){let val=i===null?'':data.library[tab][i];modal('<h2>'+(i===null?'Nowa pozycja':'Edytuj pozycję')+'</h2><form id="itemform"><label class="field">Nazwa<input id="name" maxlength="110" required value="'+h(val)+'"></label><button class="primary">Zapisz</button> <button type="button" id="cancel">Anuluj</button></form>');document.getElementById('cancel').onclick=()=>document.getElementById('overlay').remove();document.getElementById('itemform').onsubmit=e=>{e.preventDefault();let v=document.getElementById('name').value.trim();if(!v)return;if(i===null){if(!data.library[tab].includes(v))data.library[tab].push(v)}else data.library[tab][i]=v;save();document.getElementById('overlay').remove();render()}}
+window.questUpdateResult=function(message){const status=document.getElementById('update-status');if(status)status.textContent=message;const btn=document.getElementById('update-app');if(btn)btn.disabled=false;};
 async function checkAppUpdate(){
+ if(window.QuestNative&&typeof window.QuestNative.checkForUpdates==='function'){
+  const status=document.getElementById('update-status'),btn=document.getElementById('update-app');
+  if(status)status.textContent='Sprawdzam pakiet aktualizacji…';if(btn)btn.disabled=true;
+  window.QuestNative.checkForUpdates();return;
+ }
  const btn=document.getElementById('update-app'),status=document.getElementById('update-status');
  if(btn)btn.disabled=true;
  if(status)status.textContent='Sprawdzam aktualizacje na serwerze…';
