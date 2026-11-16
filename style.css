@@ -293,3 +293,9 @@ html,body{min-height:100%;height:100%;overflow:hidden}
 .recipe-screen .recipe-check input[type="checkbox"]:focus-visible{outline:2px solid #b8a3ec;outline-offset:3px}
 .recipe-screen .recipe-check:active input[type="checkbox"]{transform:scale(.93)}
 @media(prefers-reduced-motion:reduce){.recipe-screen .recipe-check input[type="checkbox"],.recipe-screen .recipe-check input[type="checkbox"]::after{transition:none}}
+
+/* QUEST 4.0.1 — distinguish lifetime level from daily XP goal */
+.home-level-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:11px;font-size:11px;color:#c9c3df;font-weight:650}
+.home-level-label b{font-size:12px;color:#eee7ff;font-variant-numeric:tabular-nums}
+.home-summary-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px;font-variant-numeric:tabular-nums}
+.home-progress>i{max-width:100%;transition:width .35s ease}
