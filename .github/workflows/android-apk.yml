@@ -27,7 +27,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
+      - name: Check Android SDK on runner
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          test -d "$ANDROID_HOME"
+          ls "$ANDROID_HOME/platforms" || true
       - name: Copy bundled offline web app
         run: |
           mkdir -p app/src/main/assets/web
