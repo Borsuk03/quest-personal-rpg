@@ -83,3 +83,37 @@
 .today-entries .entrytext strong,.today-entries .entrytext small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .today-entries .entrytext small{color:#aebddd;font-size:10px}
 .today-entries .entryright b{white-space:nowrap;font-size:11px}
+
+/* QUEST 2.6 — compact mobile dashboard, natural scrolling */
+.main.today{display:block;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+.main.today::-webkit-scrollbar{display:none}
+.today-layout{height:auto;min-height:100%;display:flex;flex-direction:column;gap:9px;padding-bottom:16px}
+.topbar{padding:11px 2px 13px}
+.topbar h1{font-size:25px;margin-top:4px}
+.level{padding:7px 10px}
+.progresscard{padding:12px 14px;border-radius:15px}
+.progresshead strong{font-size:15px;margin-top:4px}
+.xp b{font-size:20px}
+.progressline{margin:10px 0 8px}
+.recommend-card{min-height:52px;padding:9px 11px;border-radius:13px}
+.category-grid{flex:none;min-height:0;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:78px;gap:8px}
+.category-card{height:78px;min-height:78px;border-radius:14px;padding:10px 12px;display:grid;grid-template-columns:26px minmax(0,1fr) 26px;grid-template-rows:1fr auto;gap:2px 7px;align-items:center;justify-content:initial}
+.category-card .cat-icon{grid-column:1;grid-row:1;font-size:23px;align-self:center}
+.category-card .cat-name{grid-column:2/4;grid-row:1;align-self:center;font-size:14px;line-height:1.2;white-space:normal;overflow-wrap:anywhere}
+.category-card .cat-sub{grid-column:1/3;grid-row:2;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.category-card .cat-foot{grid-column:3;grid-row:2;display:flex;justify-content:flex-end;align-items:center}
+.category-card .cat-foot small{display:none}
+.category-card .plus{width:24px;height:24px;border-radius:8px;font-size:18px}
+.category-card.fitness{grid-column:1/-1;height:62px;min-height:62px;display:grid;grid-template-columns:26px minmax(0,1fr) 28px;grid-template-rows:1fr auto;column-gap:10px}
+.category-card.fitness .cat-icon{grid-column:1;grid-row:1/3;font-size:23px}
+.category-card.fitness .cat-name{grid-column:2;grid-row:1;font-size:14px;align-self:end}
+.category-card.fitness .cat-sub{grid-column:2;grid-row:2;align-self:start}
+.category-card.fitness .cat-foot{grid-column:3;grid-row:1/3;display:flex;flex-direction:row;justify-content:center}
+.workout-shortcut{min-height:44px;padding:9px 12px;border-radius:12px}
+.today-entries{margin-top:0;padding:12px;border-radius:14px}
+.today-entries .row{margin-bottom:5px}
+.compact-bottom{padding:9px 12px;border-radius:13px}
+.bottomnav{margin-top:5px;padding:6px 0 calc(6px + env(safe-area-inset-bottom))}
+.navitem{padding:6px 2px}
+@media(max-height:740px){.category-grid{grid-auto-rows:72px}.category-card{height:72px;min-height:72px;padding:8px 10px}.category-card.fitness{height:58px;min-height:58px}.today-layout{gap:7px}}
+@media(max-height:610px){.category-card .cat-sub{display:block}.category-card.fitness .cat-sub{display:block}.category-card.fitness{grid-template-rows:1fr auto}.category-card.fitness .cat-icon{grid-row:1/3}.category-card.fitness .cat-foot{grid-row:1/3}}
