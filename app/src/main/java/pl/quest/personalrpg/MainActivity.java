@@ -2,6 +2,7 @@ package pl.quest.personalrpg;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.ActivityNotFoundException;
 import android.net.Uri;
 import android.webkit.ValueCallback;
 import android.os.Bundle;
@@ -69,6 +70,12 @@ public class MainActivity extends Activity {
       }
     });
     web.setWebViewClient(new WebViewClient() {
+      @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+        Uri uri=request.getUrl();
+        if("appassets.androidplatform.net".equals(uri.getHost()))return false;
+        try{startActivity(new Intent(Intent.ACTION_VIEW,uri));}catch(ActivityNotFoundException ignored){}
+        return true;
+      }
       @Override public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
         URL url;
         try { url = new URL(request.getUrl().toString()); } catch(Exception e) { return null; }
