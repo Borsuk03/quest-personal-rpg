@@ -1,6 +1,9 @@
 package pl.quest.personalrpg;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.webkit.ValueCallback;
 import android.os.Bundle;
 import android.os.Build;
 import android.webkit.JavascriptInterface;
@@ -33,6 +36,10 @@ public class MainActivity extends Activity {
   private WebView web;
   private File active;
   private volatile boolean updating = false;
+  private static final int PICK_BACKUP = 201;
+  private static final int SAVE_BACKUP = 202;
+  private ValueCallback<Uri[]> fileCallback;
+  private String pendingBackup;
 
   @Override public void onCreate(Bundle state) {
     super.onCreate(state);
@@ -48,7 +55,19 @@ public class MainActivity extends Activity {
     settings.setAllowContentAccess(false);
     settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
     web.addJavascriptInterface(new NativeBridge(), "QuestNative");
-    web.setWebChromeClient(new WebChromeClient());
+    web.setWebChromeClient(new WebChromeClient(){
+      @Override public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> callback, FileChooserParams params){
+        if(fileCallback!=null)fileCallback.onReceiveValue(null);
+        fileCallback=callback;
+        try{
+          Intent intent=new Intent(Intent.ACTION_OPEN_DOCUMENT);
+          intent.setType("application/json");
+          intent.addCategory(Intent.CATEGORY_OPENABLE);
+          startActivityForResult(intent,PICK_BACKUP);
+          return true;
+        }catch(Exception e){fileCallback=null;return false;}
+      }
+    });
     web.setWebViewClient(new WebViewClient() {
       @Override public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
         URL url;
@@ -81,6 +100,17 @@ public class MainActivity extends Activity {
   public class NativeBridge {
     @JavascriptInterface public void checkForUpdates() { runOnUiThread(()->checkUpdates(true)); }
     @JavascriptInterface public String platform() { return "android"; }
+    @JavascriptInterface public void exportBackup(String json) {
+      if(json==null||json.length()>10_000_000)return;
+      runOnUiThread(()->{
+        pendingBackup=json;
+        Intent intent=new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.setType("application/json");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.putExtra(Intent.EXTRA_TITLE,"quest-backup.json");
+        startActivityForResult(intent,SAVE_BACKUP);
+      });
+    }
   }
 
   private void notifyWeb(String message, boolean reload) {
@@ -163,6 +193,23 @@ public class MainActivity extends Activity {
         if(manual)notifyWeb("Aktualizacja niedostępna. Tryb offline działa nadal.",false);
       } finally {updating=false;}
     });
+  }
+  @Override protected void onActivityResult(int requestCode,int resultCode,Intent result){
+    super.onActivityResult(requestCode,resultCode,result);
+    if(requestCode==PICK_BACKUP){
+      if(fileCallback!=null){
+        fileCallback.onReceiveValue(resultCode==RESULT_OK&&result!=null&&result.getData()!=null?new Uri[]{result.getData()}:null);
+        fileCallback=null;
+      }
+    }else if(requestCode==SAVE_BACKUP){
+      if(resultCode==RESULT_OK&&result!=null&&result.getData()!=null&&pendingBackup!=null){
+        try(java.io.OutputStream out=getContentResolver().openOutputStream(result.getData())){
+          if(out!=null)out.write(pendingBackup.getBytes(StandardCharsets.UTF_8));
+          Toast.makeText(this,"Kopia zapasowa zapisana",Toast.LENGTH_SHORT).show();
+        }catch(Exception e){Toast.makeText(this,"Nie udało się zapisać kopii",Toast.LENGTH_LONG).show();}
+      }
+      pendingBackup=null;
+    }
   }
   @Override public void onBackPressed() {
     if(web.canGoBack())web.goBack();else super.onBackPressed();
