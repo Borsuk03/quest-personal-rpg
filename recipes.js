@@ -30,7 +30,7 @@ const QUEST_RECIPES=[
   {
     "id": "potato-salad",
     "name": "Białkowa sałatka ziemniaczano-jajeczna",
-    "type": "Obiad",
+    "type": "Śniadanie",
     "minutes": 40,
     "servings": 4,
     "source": "High-Protein Loaded Potato & Egg Salad",
@@ -60,7 +60,7 @@ const QUEST_RECIPES=[
   {
     "id": "chicken-ranch",
     "name": "Chicken Bacon Ranch — białkowa sałatka",
-    "type": "Obiad",
+    "type": "Śniadanie",
     "minutes": 30,
     "servings": 4,
     "source": "High Protein Smash & Scoop",
@@ -158,7 +158,7 @@ const QUEST_RECIPES=[
   {
     "id": "peanut-noodles",
     "name": "Orzechowy makaron azjatycki",
-    "type": "Obiad",
+    "type": "Kolacja",
     "minutes": 20,
     "servings": 2,
     "source": "@mraucin_ — wersja z zachowanych składników",
@@ -377,7 +377,7 @@ const QUEST_RECIPES=[
   {
     "id": "tuna-egg",
     "name": "Chrupiąca pasta jajeczna z tuńczykiem",
-    "type": "Obiad",
+    "type": "Śniadanie",
     "minutes": 0,
     "servings": 2,
     "source": "@stefan_agcoaching",
@@ -610,7 +610,7 @@ const QUEST_RECIPES=[
   {
     "id": "mung-stirfry",
     "name": "Makaron stir-fry z kiełkami mung",
-    "type": "Obiad",
+    "type": "Kolacja",
     "minutes": 0,
     "servings": 1,
     "source": "@ozubko — liczba porcji niepodana",
@@ -633,7 +633,7 @@ const QUEST_RECIPES=[
   {
     "id": "sf-garlic-noodles",
     "name": "Makaron czosnkowy San Francisco",
-    "type": "Obiad",
+    "type": "Kolacja",
     "minutes": 0,
     "servings": 1,
     "source": "@bisongainz — liczba porcji niepodana",
@@ -654,7 +654,7 @@ const QUEST_RECIPES=[
   {
     "id": "sweet-potato-gnocchi",
     "name": "Kluski z batatów w sosie miodowym",
-    "type": "Obiad",
+    "type": "Kolacja",
     "minutes": 0,
     "servings": 4,
     "source": "@bartlomiej_wlodarczyk",
@@ -682,7 +682,7 @@ const QUEST_RECIPES=[
   {
     "id": "almond-chicken-salad",
     "name": "Sałatka z kurczakiem i sosem migdałowo-chili",
-    "type": "Obiad",
+    "type": "Kolacja",
     "minutes": 0,
     "servings": 1,
     "source": "@coach_brettcarrington — przygotowanie odtworzone",
@@ -706,7 +706,7 @@ const QUEST_RECIPES=[
   {
     "id": "chicken-buns",
     "name": "Mięsne bułeczki z kurczakiem",
-    "type": "Obiad",
+    "type": "Śniadanie",
     "minutes": 0,
     "servings": 3,
     "source": "@grubekalorie",
