@@ -846,4 +846,386 @@ const QUEST_RECIPES=[
       "Wymieszaj składniki na gładką masę, przelej do formy i piecz ok. 45 minut w 200°C. Ostudź i podziel na 4 kawałki."
     ]
   }
+,
+  {
+    "id": "egg-muffins-jalapeno",
+    "name": "Muffinki jajeczne z jalapeño i serem",
+    "type": "Śniadanie",
+    "minutes": 25,
+    "servings": 1,
+    "source": "Adaptacja muffinek jajecznych z serkiem wiejskim — smartasty.app",
+    "ingredients": [
+      "2 jajka",
+      "80 g serka wiejskiego",
+      "30 g tartego cheddara",
+      "½ czerwonej papryki",
+      "15 g jalapeño",
+      "Szczypiorek, sól, pieprz"
+    ],
+    "steps": [
+      "Rozgrzej airfryer do 170°C i przygotuj 3 silikonowe foremki.",
+      "Roztrzep jajka z serkiem, drobno pokrojoną papryką, jalapeño i przyprawami.",
+      "Rozlej do foremek, posyp serem i piecz 13–17 minut do ścięcia środka."
+    ]
+  },
+  {
+    "id": "skyr-pancakes",
+    "name": "Placuszki skyrowe z malinami",
+    "type": "Śniadanie",
+    "minutes": 20,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "150 g skyru naturalnego",
+      "1 jajko",
+      "45 g mąki owsianej",
+      "½ łyżeczki proszku do pieczenia",
+      "80 g malin",
+      "1 łyżeczka oleju",
+      "Opcjonalnie erytrytol"
+    ],
+    "steps": [
+      "Wymieszaj skyr, jajko, mąkę i proszek na gęste ciasto.",
+      "Na lekko natłuszczonej patelni smaż niewielkie placuszki po 2–3 minuty na stronę.",
+      "Podaj z malinami; nie dodawaj słodzika, jeśli owoce są wystarczająco słodkie."
+    ]
+  },
+  {
+    "id": "breakfast-burrito",
+    "name": "Burrito śniadaniowe z jajkiem i kurczakiem",
+    "type": "Śniadanie",
+    "minutes": 20,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "1 tortilla pełnoziarnista",
+      "2 jajka",
+      "80 g ugotowanego kurczaka",
+      "30 g sera mozzarella",
+      "½ papryki",
+      "20 g jogurtu greckiego",
+      "Sól, pieprz, wędzona papryka"
+    ],
+    "steps": [
+      "Podsmaż pokrojoną paprykę, dodaj jajka i mieszaj do ścięcia.",
+      "Dodaj kawałki wcześniej ugotowanego kurczaka i ser.",
+      "Zawiń w tortillę z jogurtem i podsmaż z obu stron na suchej patelni."
+    ]
+  },
+  {
+    "id": "oatmeal-pistachio",
+    "name": "Owsianka pistacjowa z białkiem",
+    "type": "Śniadanie",
+    "minutes": 10,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "50 g płatków owsianych",
+      "180 ml mleka",
+      "25 g odżywki białkowej pistacjowej",
+      "80 g skyru",
+      "10 g pistacji",
+      "50 g malin"
+    ],
+    "steps": [
+      "Ugotuj płatki w mleku przez około 5 minut.",
+      "Zdejmij z ognia, lekko przestudź i wmieszaj odżywkę białkową oraz skyr.",
+      "Posyp pistacjami i malinami."
+    ]
+  },
+  {
+    "id": "shakshuka-feta",
+    "name": "Szakszuka z fetą i fasolą",
+    "type": "Śniadanie",
+    "minutes": 20,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "2 jajka",
+      "200 g pomidorów krojonych z puszki",
+      "80 g czerwonej fasoli z puszki",
+      "½ cebuli",
+      "½ papryki",
+      "30 g fety",
+      "1 łyżeczka oliwy",
+      "Papryka wędzona, chili, sól, pieprz"
+    ],
+    "steps": [
+      "Podsmaż cebulę i paprykę na oliwie.",
+      "Dodaj pomidory, fasolę i przyprawy, duś 6–8 minut.",
+      "Zrób dwa wgłębienia, wbij jajka i gotuj pod przykryciem do ścięcia. Posyp fetą."
+    ]
+  },
+  {
+    "id": "cottage-toast",
+    "name": "Tosty z serkiem wiejskim, jajkiem i jalapeño",
+    "type": "Śniadanie",
+    "minutes": 12,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "2 kromki chleba pełnoziarnistego",
+      "150 g serka wiejskiego",
+      "1 jajko",
+      "20 g cheddara",
+      "10 g jalapeño",
+      "Szczypiorek, pieprz"
+    ],
+    "steps": [
+      "Ugotuj jajko na twardo i pokrój.",
+      "Podpiecz pieczywo, rozłóż serek wiejski, jajko i jalapeño.",
+      "Posyp cheddarem i szczypiorkiem, dopraw pieprzem."
+    ]
+  },
+  {
+    "id": "protein-french-toast",
+    "name": "Tosty francuskie proteinowe z cynamonem",
+    "type": "Śniadanie",
+    "minutes": 15,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "2 kromki pieczywa tostowego",
+      "1 jajko",
+      "60 ml mleka",
+      "100 g skyru waniliowego",
+      "½ łyżeczki cynamonu",
+      "80 g truskawek",
+      "1 łyżeczka oleju"
+    ],
+    "steps": [
+      "Roztrzep jajko z mlekiem i cynamonem.",
+      "Namocz pieczywo i smaż na niewielkiej ilości oleju z obu stron do ścięcia masy jajecznej.",
+      "Podaj ze skyrem i pokrojonymi truskawkami."
+    ]
+  },
+  {
+    "id": "greek-chicken-bowl",
+    "name": "Grecki bowl z kurczakiem i fetą",
+    "type": "Obiad",
+    "minutes": 35,
+    "servings": 1,
+    "source": "Adaptacja greckich chicken bowls — annasgoodkitchen.com",
+    "ingredients": [
+      "170 g piersi kurczaka",
+      "65 g suchego ryżu",
+      "½ czerwonej papryki",
+      "40 g fety",
+      "½ czerwonej cebuli",
+      "80 g jogurtu greckiego",
+      "1 łyżeczka oliwy",
+      "Cytryna, czosnek, oregano, sól, pieprz"
+    ],
+    "steps": [
+      "Ugotuj ryż. Kurczaka zamarynuj w oliwie, cytrynie, oregano i czosnku.",
+      "Usmaż kurczaka do temperatury wewnętrznej 74°C, a paprykę i cebulę krótko podsmaż.",
+      "Połącz jogurt z cytryną i czosnkiem. Podaj wszystko w misce z fetą."
+    ]
+  },
+  {
+    "id": "hibachi-chicken",
+    "name": "Kurczak hibachi z ryżem i warzywami",
+    "type": "Obiad",
+    "minutes": 30,
+    "servings": 1,
+    "source": "Adaptacja hibachi chicken rice bowl — Jack Perez",
+    "ingredients": [
+      "170 g piersi kurczaka",
+      "65 g ryżu jaśminowego",
+      "150 g mrożonych warzyw stir-fry",
+      "1 ząbek czosnku",
+      "15 ml sosu sojowego",
+      "50 g jogurtu greckiego",
+      "10 g majonezu light",
+      "5 g ketchupu",
+      "1 łyżeczka octu ryżowego",
+      "Wędzona papryka, pieprz, imbir"
+    ],
+    "steps": [
+      "Ugotuj ryż. Pokrojonego kurczaka dopraw i usmaż do 74°C.",
+      "Na tej samej patelni podsmaż warzywa z czosnkiem, imbirem i sosem sojowym.",
+      "Połącz jogurt, majonez, ketchup, ocet i paprykę na sos. Podaj z ryżem."
+    ]
+  },
+  {
+    "id": "chicken-curry-yogurt",
+    "name": "Kurczak curry w sosie jogurtowo-musztardowym",
+    "type": "Obiad",
+    "minutes": 30,
+    "servings": 1,
+    "source": "Adaptacja curry chicken bowl — whiskandwine.com",
+    "ingredients": [
+      "180 g piersi kurczaka",
+      "65 g suchego ryżu basmati",
+      "100 g jogurtu greckiego",
+      "1 łyżeczka musztardy",
+      "1 łyżeczka curry bez kminku i kolendry",
+      "½ cebuli",
+      "½ papryki",
+      "1 łyżeczka oliwy",
+      "Sól, pieprz"
+    ],
+    "steps": [
+      "Ugotuj ryż. Podsmaż cebulę, paprykę i kurczaka na oliwie do 74°C.",
+      "Wymieszaj jogurt z musztardą, curry i odrobiną ciepłej wody.",
+      "Zdejmij patelnię z ognia, wmieszaj sos, nie doprowadzając do wrzenia. Podaj z ryżem."
+    ]
+  },
+  {
+    "id": "beef-chili-rice",
+    "name": "Chili con carne z ryżem",
+    "type": "Obiad",
+    "minutes": 35,
+    "servings": 2,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "300 g mielonej wołowiny 5–10% tłuszczu",
+      "1 puszka czerwonej fasoli (ok. 240 g po odsączeniu)",
+      "1 puszka pomidorów krojonych (400 g)",
+      "1 cebula",
+      "1 papryka",
+      "100 g suchego ryżu",
+      "1 łyżeczka oliwy",
+      "Wędzona papryka, chili, czosnek, oregano, sól"
+    ],
+    "steps": [
+      "Ugotuj ryż na dwie porcje.",
+      "Podsmaż cebulę, paprykę i wołowinę, aż mięso będzie całkowicie ugotowane.",
+      "Dodaj pomidory, odsączoną fasolę i przyprawy, duś 15 minut. Podziel na dwie porcje."
+    ]
+  },
+  {
+    "id": "salmon-potatoes",
+    "name": "Łosoś z ziemniakami i brokułem — Ninja Combi",
+    "type": "Obiad",
+    "minutes": 30,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "150 g filetu łososia",
+      "220 g ziemniaków",
+      "180 g brokułu",
+      "80 g jogurtu greckiego",
+      "1 łyżeczka oliwy",
+      "Cytryna, czosnek, koperek, sól, pieprz"
+    ],
+    "steps": [
+      "Pokrój ziemniaki, wymieszaj z oliwą i piecz w 190°C około 12 minut.",
+      "Dodaj łososia i brokuł, piecz kolejne 10–14 minut, aż ryba będzie gotowa i będzie łatwo rozdzielać się widelcem.",
+      "Wymieszaj jogurt z koperkiem, czosnkiem i cytryną, podaj jako sos."
+    ]
+  },
+  {
+    "id": "peanut-chicken-noodles",
+    "name": "Makaron z kurczakiem i sosem orzechowo-limonkowym",
+    "type": "Obiad",
+    "minutes": 25,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "170 g piersi kurczaka",
+      "75 g suchego makaronu ramen lub pszennego",
+      "½ papryki",
+      "½ cebuli",
+      "15 g masła orzechowego",
+      "15 ml sosu sojowego",
+      "1 łyżeczka soku z limonki",
+      "5 g gochujang",
+      "1 ząbek czosnku"
+    ],
+    "steps": [
+      "Ugotuj makaron, zachowaj kilka łyżek wody.",
+      "Obsmaż kurczaka do 74°C, dodaj cebulę, paprykę i czosnek.",
+      "Wymieszaj masło orzechowe, sos sojowy, limonkę, gochujang i wodę z makaronu. Połącz wszystko na woku."
+    ]
+  },
+  {
+    "id": "chicken-fajita-bowl",
+    "name": "Bowl fajita z kurczakiem i fasolą",
+    "type": "Obiad",
+    "minutes": 30,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "170 g piersi kurczaka",
+      "60 g suchego ryżu",
+      "80 g czerwonej fasoli",
+      "½ papryki",
+      "½ cebuli",
+      "30 g kukurydzy",
+      "60 g skyru naturalnego",
+      "Papryka wędzona, czosnek, chili, sok z limonki"
+    ],
+    "steps": [
+      "Ugotuj ryż. Kurczaka pokrój, dopraw papryką, chili i czosnkiem.",
+      "Podsmaż mięso do 74°C, dodaj cebulę i paprykę.",
+      "Podgrzej fasolę i kukurydzę, połącz z ryżem i kurczakiem. Podaj ze skyrem i limonką."
+    ]
+  },
+  {
+    "id": "tuna-melt",
+    "name": "Tuna melt z serem i jalapeño",
+    "type": "Kolacja",
+    "minutes": 15,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "1 puszka tuńczyka w sosie własnym (120 g po odsączeniu)",
+      "2 kromki chleba pełnoziarnistego",
+      "25 g cheddara",
+      "40 g jogurtu greckiego",
+      "10 g jalapeño",
+      "1 łyżeczka musztardy",
+      "Pieprz, szczypiorek"
+    ],
+    "steps": [
+      "Odsącz tuńczyka i wymieszaj z jogurtem, musztardą, jalapeño i pieprzem.",
+      "Nałóż na pieczywo, posyp cheddarem.",
+      "Zapiekaj w airfryerze w 180°C przez 5–7 minut do roztopienia sera."
+    ]
+  },
+  {
+    "id": "chicken-lettuce-wraps",
+    "name": "Sałatowe łódeczki z kurczakiem i sezamem",
+    "type": "Kolacja",
+    "minutes": 20,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "160 g piersi kurczaka",
+      "4 duże liście sałaty rzymskiej",
+      "½ czerwonej papryki",
+      "½ cebuli",
+      "10 ml sosu sojowego",
+      "1 łyżeczka oleju sezamowego",
+      "5 g sezamu",
+      "Czosnek, imbir, chili"
+    ],
+    "steps": [
+      "Podsmaż kurczaka z cebulą, papryką, czosnkiem i imbirem do 74°C.",
+      "Dodaj sos sojowy i olej sezamowy, krótko odparuj.",
+      "Nałóż farsz do umytych liści sałaty i posyp sezamem."
+    ]
+  },
+  {
+    "id": "skyr-cheesecake-cup",
+    "name": "Serniczek skyrowy z malinami w pucharku",
+    "type": "Deser",
+    "minutes": 10,
+    "servings": 1,
+    "source": "Autorska propozycja QUEST",
+    "ingredients": [
+      "170 g skyru waniliowego",
+      "60 g twarogu półtłustego",
+      "70 g malin",
+      "10 g gorzkiej czekolady",
+      "1 herbatnik (ok. 10 g)",
+      "Opcjonalnie erytrytol"
+    ],
+    "steps": [
+      "Zblenduj skyr z twarogiem na gładki krem.",
+      "Pokrusz herbatnik do pucharka, dodaj krem i maliny.",
+      "Posyp startą gorzką czekoladą, schłodź przez 20 minut, jeśli masz czas."
+    ]
+  }
 ];
